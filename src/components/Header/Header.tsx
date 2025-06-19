@@ -32,6 +32,8 @@ import { useDispatch } from 'react-redux'
 import { remove } from "../../features/user/userSlice";
 import { ADMIN, BOOKINGS, CHECKOUT, DASHBOARD, LOGIN, PROFILE } from "../../Constants/pagesConstants";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { CartDialog } from "../AddToCart/CartDialog";
+import { selectCartItemCount } from "../../features/addToCart/addToSlice";
 
 interface ChildComponentProps {
   sendDataToParent: (data: string) => void;
@@ -47,7 +49,7 @@ export const Header: React.FC<ChildComponentProps> = ({ sendDataToParent }) => {
     }
   };
 
-  const cart = useSelector((state : any) => state.cart?.value);
+  const cart = useSelector((state: any) => state.addToCart);
 
   console.log("Cart in header ... ", cart)
 
@@ -60,11 +62,23 @@ export const Header: React.FC<ChildComponentProps> = ({ sendDataToParent }) => {
   const [accountEl, setAccountEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const [loggedInUser , setLoggedInUser] = useState();
+const [cartOpen, setCartOpen] = useState(false); // Add this state
+  const handleCartOpen = () => setCartOpen(true);
+  const handleCartClose = () => setCartOpen(false);
 
+const totalCartItems = useSelector(selectCartItemCount);
+  // Add these functions
+  // const handleCartOpen = () => {
+  //   setCartOpen(true);
+  // };
   useEffect(() => {
     setLoggedInUser(user);
     console.log("User role is:", user?.role); 
   }, [user]);
+
+useEffect(() => {
+  console.log("Cart items changed:", cart?.selectedItems);
+}, [cart?.selectedItems]);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -82,19 +96,21 @@ export const Header: React.FC<ChildComponentProps> = ({ sendDataToParent }) => {
               }
             );
             const address = response.data.results[0]?.formatted_address;
-            setLocation(address);
+            setLocation(address || "Location not found");
           } catch (error) {
-            console.log("Failed to fetch location");
+            console.log("Failed to fetch location: ", error);
           }
         },
-        (error) => {
-          console.log(error.message);
+        (error : any) => {
+          console.log("Geolocation error: ", error.message);
+          setError(error.message);
         }
       );
     } else {
       console.log("Geolocation is not supported by this browser.");
     }
   }, []);
+  
 
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -199,6 +215,10 @@ export const Header: React.FC<ChildComponentProps> = ({ sendDataToParent }) => {
   function updateLocationFromMap(data: string): void {
     setDataFromMap(data);
   }
+  const [cartItems, setCartItems] = useState([]);
+const handleRemoveItem = (index: number) => {
+  setCartItems(prevItems => prevItems.filter((_, i) => i !== index));
+};
 
   return (
     <>
@@ -218,35 +238,44 @@ export const Header: React.FC<ChildComponentProps> = ({ sendDataToParent }) => {
           </div>
 
           <div className="dropdowns-container">
-            <TextField
-              variant="outlined"
-              fullWidth
-              value={location}
-              onClick={handleClickOpen}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LocationOnIcon
-                      sx={{ fontSize: 30, color: "#0d6efd", cursor: "pointer" }}
-                    />
-                  </InputAdornment>
-                ),
-              }}
-              sx={{
-                backgroundColor: "white",
-                borderRadius: 2,
-                width: "50%",
-                "&:hover": {
-                  cursor: "pointer",
-                },
-                cursor: "pointer",
-              }}
-            />
-       <IconButton onClick={handleProceedToCheckout}>
-  <Badge badgeContent={cart?.selecteditem?.length ? cart?.selecteditem?.length : 0} color="primary">
-    <ShoppingCartIcon color="action" />
-  </Badge>
-</IconButton>
+          <div style={{
+  position: 'relative',
+  width: '50%',
+  display: 'flex',
+  alignItems: 'center',
+  backgroundColor: 'white',
+  border: `1px solid ${location ? '#0d6efd' : '#ccc'}`,
+  borderRadius: '8px',
+  cursor: 'pointer',
+  transition: 'border-color 0.3s ease',
+
+}} onClick={handleClickOpen}>
+  <LocationOnIcon style={{
+    marginLeft: '8px',
+    fontSize: '30px',
+    color: '#0d6efd'
+  }} />
+  <input
+    type="text"
+    value={location}
+    readOnly
+    style={{
+      width: '100%',
+      border: 'none',
+      outline: 'none',
+      padding: '12px',
+      backgroundColor: 'transparent',
+      cursor: 'pointer',
+      color:  'inherit'
+    }}
+    placeholder="Select location"
+  />
+</div>
+        <IconButton onClick={handleCartOpen}>
+    <Badge  badgeContent={totalCartItems}  color="primary">
+      <ShoppingCartIcon color="action" />
+    </Badge>
+  </IconButton>
             <IconButton
   size="large"
   edge="end"
@@ -385,7 +414,17 @@ export const Header: React.FC<ChildComponentProps> = ({ sendDataToParent }) => {
               Save
             </Button>
           </DialogActions>
+        
         </Dialog>
+        <CartDialog 
+        open={cartOpen} 
+        handleClose={handleCartClose}
+        handleCheckout={() => {
+          handleCartClose();
+          sendDataToParent(CHECKOUT); // Only navigate on checkout button click
+        }}
+        //  handleRemoveItem={handleRemoveItem}
+      />
       </Navbar>
     </>
   );
