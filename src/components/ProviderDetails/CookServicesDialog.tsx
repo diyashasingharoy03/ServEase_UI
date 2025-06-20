@@ -15,6 +15,7 @@ import { usePricingFilterService } from '../../utils/PricingFilter';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import { addToCart, removeFromCart } from '../../features/addToCart/addToSlice';
+import { MealPackage } from '../../types/mealPackage';
 
 interface CookServicesDialogProps {
   open: boolean;
@@ -23,26 +24,9 @@ interface CookServicesDialogProps {
   sendDataToParent?: (data: string) => void;
 }
 
-export interface MealPackage {
-  selected: boolean;
-  persons: number;
-  basePrice: number;
-  calculatedPrice: number;
-  maxPersons: number;
-  description: string[];
-  preparationTime: string;
-  rating: number;
-  reviews: string;
-  category: string;
-  jobDescription: string;
-  remarks: string;
-  inCart: boolean;
-}
-
 interface PackagesState {
   [key: string]: MealPackage;
 }
-
 const CookServicesDialog: React.FC<CookServicesDialogProps> = ({ 
   open, 
   handleClose, 
@@ -53,17 +37,12 @@ const CookServicesDialog: React.FC<CookServicesDialogProps> = ({
   
   const user = useSelector((state: any) => state.user?.value);
   const pricing = useSelector((state: any) => state.pricing?.groupedServices);
-  
   const [packages, setPackages] = useState<PackagesState>({});
   const [loginOpen, setLoginOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState<any>(null);
   const cart = useSelector((state: any) => state.addToCart?.items || []);
   const { getBookingType, getPricingData, getFilteredPricing } = usePricingFilterService();
-
-const bookingType = getBookingType();
-
-
-
+  const bookingType = getBookingType();
   const customerId = user?.customerDetails?.customerId || null;
   const currentLocation = user?.customerDetails?.currentLocation;
   const firstName = user?.customerDetails?.firstName;
@@ -108,51 +87,6 @@ const bookingType = getBookingType();
   };
 
 const cookServices = useMemo(() => getFilteredPricing("cook"), [getFilteredPricing]);
-
-// useEffect(() => {
-//   const updatedCookServices = getFilteredPricing("cook");
-  
-//   if (!updatedCookServices || updatedCookServices.length === 0) {
-//     setPackages({});
-//     return;
-//   }
-
-//   const initialPackages: PackagesState = {};
-
-//   updatedCookServices.forEach((service: any) => {
-//     const category = service.Categories.toLowerCase();
-//     const maxPersons = parseInt(service["Numbers/Size"].replace('<=', '')) || 3;
-//     let  basePrice = 0;
-//     if(bookingType?.bookingPreference?.toLowerCase() === "date") {
-//       basePrice = service["Price /Day (INR)"];
-//     } else {
-//       basePrice = service["Price /Month (INR)"];
-//     }
-   
-
-//     initialPackages[category] = {
-//       selected: false,
-//       persons: 1,
-//       basePrice,
-//       calculatedPrice: calculatePriceForPersons(basePrice, 1),
-//       maxPersons,
-//       description: service["Job Description"]
-//         .split('\n')
-//         .filter((line: string) => line.trim() !== ''),
-//       preparationTime: getPreparationTime(category),
-//       rating: 4.84,
-//       reviews: getReviewsText(category),
-//       category: service.Categories,
-//       jobDescription: service["Job Description"],
-//       remarks: service["Remarks/Conditions"],
-//        inCart: false
-//     };
-//   });
-
-//   setPackages(initialPackages);
-//   console.log("Updated packages:", initialPackages);
-// }, [pricing, bookingType]);
-
 useEffect(() => {
   const updatedCookServices = getFilteredPricing("cook");
   
@@ -172,8 +106,6 @@ useEffect(() => {
     } else {
       basePrice = service["Price /Month (INR)"];
     }
-
-    // Safely check if this package is in the cart
     const cartItem = Array.isArray(cart) 
       ? cart.find((item: any) => 
           item.type === 'meal' && 
@@ -271,21 +203,6 @@ useEffect(() => {
       };
     });
   };
-
-  // const togglePackageSelection = (packageName: string) => {
-  //   setPackages(prev => {
-  //     const currentPackage = prev[packageName];
-  //     if (!currentPackage) return prev;
-
-  //     return {
-  //       ...prev,
-  //       [packageName]: {
-  //         ...currentPackage,
-  //         selected: !currentPackage.selected
-  //       }
-  //     };
-  //   });
-  // };
 const togglePackageSelection = (packageName: string) => {
   setPackages(prev => {
     const currentPackage = prev[packageName];
@@ -293,8 +210,6 @@ const togglePackageSelection = (packageName: string) => {
 
     const newSelectedState = !currentPackage.selected;
     const shouldBeInCart = newSelectedState;
-
-    // Update cart if needed
     if (shouldBeInCart && !currentPackage.inCart) {
       dispatch(addToCart({
         type: 'meal',
@@ -331,8 +246,6 @@ const toggleCart = (packageName: string) => {
 
     const newInCartState = !currentPackage.inCart;
     const shouldBeSelected = newInCartState;
-
-    // Update cart
     if (newInCartState) {
       dispatch(addToCart({
         type: 'meal',
@@ -360,40 +273,9 @@ const toggleCart = (packageName: string) => {
       }
     };
   });
-};
- // New function to handle add to cart
-  //  const toggleCart = (packageName: string) => {
-  //   setPackages(prev => {
-  //     const currentPackage = prev[packageName];
-  //     if (!currentPackage) return prev;
-
-  //     const isAddingToCart = !currentPackage.inCart;
-
-  //     if (isAddingToCart) {
-  //       dispatch(addToCart({
-  //         mealType: packageName.toUpperCase(),
-  //         persons: currentPackage.persons,
-  //         price: currentPackage.calculatedPrice,
-  //         description: currentPackage.description.join(', '),
-  //         basePrice: currentPackage.basePrice,
-  //         maxPersons: currentPackage.maxPersons
-  //       }));
-  //     } else {
-  //       dispatch(removeFromCart(packageName.toUpperCase()));
-  //     }
-  //        return {
-  //       ...prev,
-  //       [packageName]: {
-  //         ...currentPackage,
-  //         inCart: isAddingToCart,
-          
-  //       }
-  //     };
-  //   });
-  // };
-  
+};  
   const handleApplyVoucher = () => {
-    // Voucher logic here
+    
   };
 
  const handleCheckout = async () => {
@@ -532,7 +414,6 @@ const toggleCart = (packageName: string) => {
   const renderPackageSections = () => {
     return Object.entries(packages).map(([packageName, pkg]) => {
       const categoryColor = getCategoryColor(packageName);
-      
 
       return (
         <div 
@@ -630,19 +511,6 @@ const toggleCart = (packageName: string) => {
           </div>
           
           <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-            {/* <IconButton
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleCart(packageName);
-              }}
-              style={{
-                backgroundColor: pkg.inCart ? categoryColor : '#f5f5f5',
-                color: pkg.inCart ? 'white' : categoryColor,
-                padding: '8px'
-              }}
-            >
-              {pkg.inCart ? <RemoveShoppingCartIcon /> : <AddShoppingCartIcon />}
-            </IconButton> */}
             <button 
               onClick={(e) => {
                 e.stopPropagation();

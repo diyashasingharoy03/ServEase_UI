@@ -564,23 +564,7 @@ const handlePaymentSuccess = async (orderId: string, bookingData: BookingDetails
                       </div>
                     </div>
                     
-                    {/* <button 
-                      onClick={() => togglePackageSelection('day', true)}
-                      style={{
-                        width: '100%',
-                        padding: '12px',
-                        backgroundColor: babyPackages.day.selected ? '#e17055' : '#fff',
-                        color: babyPackages.day.selected ? 'white' : '#e17055',
-                        border: '1px solid #e17055',
-                        borderRadius: '6px',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        marginTop: '10px'
-                      }}
-                    >
-                      {babyPackages.day.selected ? 'SELECTED' : 'SELECT SERVICE'}
-                    </button> */}
-                    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
   <button 
     onClick={() => togglePackageSelection('day', true)}
     style={{
@@ -701,26 +685,8 @@ const handlePaymentSuccess = async (orderId: string, bookingData: BookingDetails
                         <span>Sleep routine establishment</span>
                       </div>
                     </div>
-{/*                     
-                    <button 
-                      onClick={() => togglePackageSelection('night', true)}
-                      style={{
-                        width: '100%',
-                        padding: '12px',
-                        backgroundColor: babyPackages.night.selected ? '#e17055' : '#fff',
-                        color: babyPackages.night.selected ? 'white' : '#e17055',
-                        border: '1px solid #e17055',
-                        borderRadius: '6px',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        marginTop: '10px'
-                      }}
-                    >
-                      {babyPackages.night.selected ? 'SELECTED' : 'SELECT SERVICE'}
-                    </button> */}
-                    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-  
-                   <button 
+  <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+  <button 
     onClick={() => togglePackageSelection('night', true)}
     style={{
       width: '50%',
@@ -839,24 +805,7 @@ const handlePaymentSuccess = async (orderId: string, bookingData: BookingDetails
                         <span>Live-in nanny service</span>
                       </div>
                     </div>
-                    
-                    {/* <button 
-                      onClick={() => togglePackageSelection('fullTime', true)}
-                      style={{
-                        width: '100%',
-                        padding: '12px',
-                        backgroundColor: babyPackages.fullTime.selected ? '#e17055' : '#fff',
-                        color: babyPackages.fullTime.selected ? 'white' : '#e17055',
-                        border: '1px solid #e17055',
-                        borderRadius: '6px',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        marginTop: '10px'
-                      }}
-                    >
-                      {babyPackages.fullTime.selected ? 'SELECTED' : 'SELECT SERVICE'}
-                    </button> */}
-                    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+  <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
   <button 
     onClick={() => togglePackageSelection('fullTime', true)}
     style={{
@@ -979,24 +928,7 @@ const handlePaymentSuccess = async (orderId: string, bookingData: BookingDetails
                         <span>Meal preparation and assistance</span>
                       </div>
                     </div>
-{/*                     
-                    <button 
-                      onClick={() => togglePackageSelection('day', false)}
-                      style={{
-                        width: '100%',
-                        padding: '12px',
-                        backgroundColor: elderlyPackages.day.selected ? '#e17055' : '#fff',
-                        color: elderlyPackages.day.selected ? 'white' : '#e17055',
-                        border: '1px solid #e17055',
-                        borderRadius: '6px',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        marginTop: '10px'
-                      }}
-                    >
-                      {elderlyPackages.day.selected ? 'SELECTED' : 'SELECT SERVICE'}
-                    </button> */}
-                    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+ <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
   <button 
     onClick={() => togglePackageSelection('day', false)}
     style={{
@@ -1117,24 +1049,7 @@ const handlePaymentSuccess = async (orderId: string, bookingData: BookingDetails
                         <span>Sleep comfort and safety</span>
                       </div>
                     </div>
-                    
-                    {/* <button 
-                      onClick={() => togglePackageSelection('night', false)}
-                      style={{
-                        width: '100%',
-                        padding: '12px',
-                        backgroundColor: elderlyPackages.night.selected ? '#e17055' : '#fff',
-                        color: elderlyPackages.night.selected ? 'white' : '#e17055',
-                        border: '1px solid #e17055',
-                        borderRadius: '6px',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        marginTop: '10px'
-                      }}
-                    >
-                      {elderlyPackages.night.selected ? 'SELECTED' : 'SELECT SERVICE'}
-                    </button> */}
-                    <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+  <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
   <button 
     onClick={() => togglePackageSelection('night', false)}
     style={{
@@ -1254,24 +1169,7 @@ const handlePaymentSuccess = async (orderId: string, bookingData: BookingDetails
                       <span>Live-in caregiver service</span>
                     </div>
                   </div>
-                  
-                  {/* <button 
-                    onClick={() => togglePackageSelection('fullTime', false)}
-                    style={{
-                      width: '100%',
-                      padding: '12px',
-                      backgroundColor: elderlyPackages.fullTime.selected ? '#e17055' : '#fff',
-                      color: elderlyPackages.fullTime.selected ? 'white' : '#e17055',
-                      border: '1px solid #e17055',
-                      borderRadius: '6px',
-                      fontWeight: 'bold',
-                      cursor: 'pointer',
-                      marginTop: '10px'
-                    }}
-                  >
-                    {elderlyPackages.fullTime.selected ? 'SELECTED' : 'SELECT SERVICE'}
-                  </button> */}
-                  <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+  <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
   <button 
     onClick={() => togglePackageSelection('fullTime', false)}
     style={{

@@ -610,23 +610,6 @@ const getAddOnDescription = (addOnName: string): string => {
                     <span>Party used type utensil cleaning</span>
                   </div>
                 </div>
-                
-                {/* <button 
-                  onClick={() => handlePackageSelect('utensilCleaning')}
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    backgroundColor: packageStates.utensilCleaning.selected ? '#e17055' : '#fff',
-                    color: packageStates.utensilCleaning.selected ? '#fff' : '#e17055',
-                    border: '1px solid #e17055',
-                    borderRadius: '6px',
-                    fontWeight: 'bold',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {packageStates.utensilCleaning.selected ? 'SELECTED' : 'SELECT SERVICE'}
-                </button> */}
-                
 <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
   <button 
     onClick={() => handlePackageSelect('utensilCleaning')}
@@ -729,22 +712,7 @@ const getAddOnDescription = (addOnName: string): string => {
                     <span>Daily sweeping and mopping of 2 rooms, 1 Hall</span>
                   </div>
                 </div>
-                
-                {/* <button 
-                  onClick={() => handlePackageSelect('sweepingMopping')}
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    backgroundColor: packageStates.sweepingMopping.selected ? '#00b894' : '#fff',
-                    color: packageStates.sweepingMopping.selected ? '#fff' : '#00b894',
-                    border: '1px solid #00b894',
-                    borderRadius: '6px',
-                    fontWeight: 'bold',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {packageStates.sweepingMopping.selected ? 'SELECTED' : 'SELECT SERVICE'}
-                </button> */}
+        
                 <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                 <button 
                   onClick={() => handlePackageSelect('sweepingMopping')}
@@ -847,21 +815,7 @@ const getAddOnDescription = (addOnName: string): string => {
                   </div>
                 </div>
                 
-                {/* <button 
-                  onClick={() => handlePackageSelect('bathroomCleaning')}
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    backgroundColor: packageStates.bathroomCleaning.selected ? '#0984e3' : '#fff',
-                    color: packageStates.bathroomCleaning.selected ? '#fff' : '#0984e3',
-                    border: '1px solid #0984e3',
-                    borderRadius: '6px',
-                    fontWeight: 'bold',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {packageStates.bathroomCleaning.selected ? 'SELECTED' : 'SELECT SERVICE'}
-                </button> */}
+
   <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                 <button 
                   onClick={() => handlePackageSelect('bathroomCleaning')}

@@ -49,7 +49,7 @@ export const Header: React.FC<ChildComponentProps> = ({ sendDataToParent }) => {
     }
   };
 
-  const cart = useSelector((state: any) => state.addToCart);
+  const cart = useSelector((state: any) => state?.addToCart);
 
   console.log("Cart in header ... ", cart)
 
@@ -62,22 +62,17 @@ export const Header: React.FC<ChildComponentProps> = ({ sendDataToParent }) => {
   const [accountEl, setAccountEl] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const [loggedInUser , setLoggedInUser] = useState();
-const [cartOpen, setCartOpen] = useState(false); // Add this state
+const [cartOpen, setCartOpen] = useState(false); 
   const handleCartOpen = () => setCartOpen(true);
   const handleCartClose = () => setCartOpen(false);
 
 const totalCartItems = useSelector(selectCartItemCount);
-  // Add these functions
-  // const handleCartOpen = () => {
-  //   setCartOpen(true);
-  // };
   useEffect(() => {
     setLoggedInUser(user);
-    console.log("User role is:", user?.role); 
   }, [user]);
 
 useEffect(() => {
-  console.log("Cart items changed:", cart?.selectedItems);
+ 
 }, [cart?.selectedItems]);
 
   useEffect(() => {
